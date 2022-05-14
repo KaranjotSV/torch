@@ -112,3 +112,4 @@ out = torch.clamp(tens1, min=2, max=5)  # values smaller than min are changed to
 boo = torch.tensor([2, -1, 4, 0], dtype=torch.bool)  # tensor([ True, True, True, False])
 out = torch.any(boo)  # returns True if any value is True
 out = torch.all(boo)  # returns True if all values are True
+
