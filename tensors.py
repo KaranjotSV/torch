@@ -113,3 +113,61 @@ boo = torch.tensor([2, -1, 4, 0], dtype=torch.bool)  # tensor([ True, True, True
 out = torch.any(boo)  # returns True if any value is True
 out = torch.all(boo)  # returns True if all values are True
 
+# indexing
+batch = 10
+features = 25
+feat = torch.rand((batch, features))  # 10x25
+
+print(feat[0].shape)  # feat[0, : ]
+print(feat[:, 0].shape)
+print(feat[2, 0 : 10])  # 0:10 -> [0, 1, 2, 3, 4, ..., 9]
+
+feat[0, 0] = 100  # assignment
+print(feat[:, 0])
+
+# fancy indexing
+tens = torch.arange(10)
+inds = [2, 5, 8]
+# print(tens[inds])
+
+tens = torch.rand((3, 5))
+rows = [1, 0]  # 2nd and 1st row, rows = torch.tensor([1, 0])
+cols = [4, 0]
+out = tens[rows, cols]
+
+# advanced indexing
+tens = torch.arange(10)
+out = tens[(tens < 2) | (tens > 8)]  # elements less than 2 or greater than 8
+out = tens[tens.remainder(2) == 0]  # multiples of 2
+
+out = torch.where(tens > 5, tens, tens * 2)  # if value is > 5, remains unchanged else gets multiplied by 2
+uni = torch.tensor([0, 0, 1, 1, 2, 2, 3]).unique()  # unique values
+dims = tens.ndimension()  # returns number of dimensions of a tensor
+num = tens.numel()  # returns number of elements in a tensor
+
+# reshaping
+tens = torch.arange(9)
+# tens_ = tens.view(3, 3)
+tens_ = tens.reshape(3, 3)
+
+trans = tens_.t()  # transpose
+_tens = trans.contiguous().view(9)  # or trans.reshape(9)
+
+tens1 = torch.rand((2, 5))
+tens2 = torch.rand((2, 5))
+print(torch.cat((tens1, tens2), dim=0).shape)
+print(torch.cat((tens1, tens2), dim=1).shape)
+
+out = tens1.view(-1)  # flatten
+
+batch = 64
+tens = torch.rand((batch, 2, 5))
+out = tens.view(batch, -1)  # 64x10
+out = tens.permute(0, 2, 1)  # to swap axes, 64x5x2
+
+tens = torch.arange(10)  # 10
+print(tens.unsqueeze(0).shape)  # adds axis, 1x10
+print(tens.unsqueeze(1).shape)  # adds axis, 10x1
+
+tens = torch.arange(10).unsqueeze(0).unsqueeze(1)  # 1x1x10
+print(tens.squeeze(1).shape)  # removes axis
