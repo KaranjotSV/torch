@@ -2,12 +2,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-import torch.optim as optim
-from torch.utils.data import DataLoader
-
-import torchvision.datasets as datasets
-import torchvision.transforms as transforms
-
 
 class NN(nn.Module):
     def __init__(self, input_size, classes):
