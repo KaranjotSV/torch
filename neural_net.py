@@ -1,3 +1,4 @@
+import pdb
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -27,6 +28,7 @@ data = torch.rand(64, 784)  # 64 samples in a batch
 # print(model(data).shape)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+# pdb.set_trace()
 size = 784
 classes = 10
 rate = 0.001
