@@ -12,6 +12,7 @@ class NN(nn.Module):
     def forward(self, inp):
         out = F.relu(self.fc1(inp))
         out = self.fc2(out)
+
         return out
 
 
@@ -30,6 +31,27 @@ class CNN(nn.Module):
         out = self.pool(out)
         out = out.reshape(out.shape[0], -1)
         out = self.fc1(out)
+
+        return out
+
+
+class RNN(nn.Module):
+    def __init__(self, size, hidden, layers, seq_len, classes, device):  # size is the number of time steps
+        super(RNN, self).__init__()
+        self.hidden = hidden
+        self.layers = layers
+        self.device = device
+        self.rec = nn.RNN(input_size=size, hidden_size=hidden, num_layers=layers, batch_first=True)
+        # batch_first = True in case, first axis represents size of batch
+        self.fc = nn.Linear(hidden * seq_len, classes)
+
+    def forward(self, inp):
+        h0 = torch.zeros(self.layers, inp.shape[0], self.hidden).to(self.device)  # initial hidden state, 2x64x256
+
+        out, state = self.rec(inp, h0)  # hidden state is ignored
+        out = out.reshape(out.shape[0], -1)
+        out = self.fc(out)
+
         return out
 
 

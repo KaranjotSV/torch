@@ -15,6 +15,10 @@ def accuracy(loader, model, arch="NN"):
 
     with torch.no_grad():  # to turn off gradients computation
         for data, targets in loader:
+
+            if arch == "RNN":
+                data = data.squeeze(1)  # batchx1x28x28 to batchx28x28
+
             data = data.to(device)
             targets = targets.to(device)
 
